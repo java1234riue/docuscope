@@ -1,0 +1,148 @@
+# DocScope Frontend - Development Context
+
+## Project Summary
+Modern, dark-themed document security scanner UI. Single page application feel with multiple HTML pages. Heavy emphasis on visual polish, animations, and attention to detail.
+
+## Design Philosophy
+- Dark glassmorphism aesthetic
+- Neon accent colors
+- Custom cursor
+- Smooth micro-interactions
+- Professional but futuristic
+
+## Color System
+```css
+/* Backgrounds */
+--bg-primary: #0a0a0f;
+--bg-secondary: #12121a;
+--bg-tertiary: #1a1a25;
+--bg-glass: rgba(255, 255, 255, 0.03);
+--bg-glass-hover: rgba(255, 255, 255, 0.06);
+
+/* Text */
+--text-primary: #ffffff;
+--text-secondary: #a0a0b0;
+--text-muted: #606070;
+
+/* Accent */
+--accent-primary: #00d4ff;
+--accent-primary-dim: rgba(0, 212, 255, 0.1);
+--accent-glow: 0 0 30px rgba(0, 212, 255, 0.3);
+
+/* Severity */
+--severity-critical: #ff3366;
+--severity-critical-dim: rgba(255, 51, 102, 0.1);
+--severity-high: #ff6b35;
+--severity-high-dim: rgba(255, 107, 53, 0.1);
+--severity-medium: #ffc107;
+--severity-medium-dim: rgba(255, 193, 7, 0.1);
+--severity-low: #4ade80;
+--severity-low-dim: rgba(74, 222, 128, 0.1);
+
+/* Gradients */
+--gradient-accent: linear-gradient(90deg, #00d4ff 0%, #00ff88 100%);
+```
+
+## Typography
+- Primary font: 'Inter' from Google Fonts
+- Mono font: 'JetBrains Mono' from Google Fonts
+- Base size: 16px (1rem)
+- Scale: 0.75rem, 0.875rem, 1rem, 1.125rem, 1.25rem, 1.5rem, 1.875rem, 2.25rem, 3rem, 3.75rem, 4.5rem
+
+## Spacing Scale
+4px increments: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96px
+
+## File Structure
+'''text
+static/
+├── index.html              # Home page with scanner
+├── how-it-works.html       # Process explanation
+├── threat-library.html     # Threat catalog
+├── about.html              # About and privacy
+├── css/
+│   ├── globals.css         # Reset, variables, base styles
+│   ├── components.css      # Reusable components
+│   ├── layout.css          # Nav, footer, containers
+│   ├── home.css            # Home page specific
+│   └── pages.css           # Other pages
+├── js/
+│   ├── main.js             # Global init, utilities
+│   ├── cursor.js           # Custom cursor
+│   ├── upload.js           # File upload and API
+│   ├── results.js          # Results rendering
+│   └── animations.js       # Scroll animations
+└── assets/
+    └── icons/              # SVG icons
+'''
+## Component Specifications
+
+### Navigation
+- Fixed position, top of page
+- Glassmorphism background (blur 20px)
+- Logo left, links right
+- Active link has accent color + bottom indicator
+- Mobile: hamburger menu
+
+### Upload Zone
+- Max width 800px, centered
+- Large padding (64px)
+- Glassmorphism card
+- Animated gradient border (flows around perimeter)
+- States: default, dragover (scale up slightly, brighter border), uploading
+- Upload icon (cloud with arrow)
+- "Drop your file here" title
+- "or click to browse" subtitle
+- Format badges: .PDF .DOCX in mono font
+- "Maximum file size: 10MB" muted text
+
+### Scan Button
+- Full width below upload zone
+- Gradient background (accent gradient)
+- Glow shadow
+- Disabled state: 50% opacity, no glow
+- Hover: lift up 2px, stronger glow
+- Loading: spinner + "Scanning..." text
+
+### Results Summary Cards
+- 4 cards in a row (grid)
+- Each card: severity color top border (3px)
+- Large count number in severity color
+- Label below in muted text
+- Glassmorphism background
+
+### Finding Cards
+- Left border colored by severity (4px)
+- Badge showing subtype (mono font, uppercase)
+- Severity label (uppercase, colored)
+- Description text
+- Code block for content/URL/value (mono font, dark bg)
+- Location indicator (Page X / Paragraph Y)
+
+### Custom Cursor
+- Hide default cursor everywhere
+- Main ring: 40px circle, accent border, follows with lerp delay
+- Center dot: 6px, accent fill, instant follow
+- Hover state: ring expands to 60px
+- Click state: ring shrinks to 30px
+- Disabled on touch devices
+
+## Animation Guidelines
+- Transitions: 0.2s-0.3s ease or ease-out
+- Use transform and opacity for performance
+- Cursor: requestAnimationFrame loop
+- Scroll reveals: IntersectionObserver with threshold 0.1
+- Page transitions: fade out 300ms, navigate, fade in
+
+## API Integration
+- POST /api/analyze with FormData
+- Handle loading state
+- Handle errors gracefully
+- On success: hide upload section, show results
+- "Scan Another" button resets to upload view
+
+## Do Not
+- Use any CSS framework
+- Use any JS framework
+- Use emojis
+- Use generic placeholder images
+- Make it look like Bootstrap/Tailwind templates
